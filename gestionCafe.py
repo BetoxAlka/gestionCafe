@@ -1,57 +1,57 @@
-import pytest
+import pytest # Importar pytest para las pruebas
 import numpy as np # Importar numpy para operaciones
 import math # Importar math para redondeo
 
-def cafe(drink):
-    name = drink[0]
-    name = name.replace(" ","")
+def cafe(drink): # Funcion que representa la Gestion de las Bebidas, recibe la lista con los valores de esta [Nombre, t1, t2, t3, t4, t5]
+    name = drink[0] # El primer elemento de la lista siempre deberá ser el nombre
+    name = name.replace(" ","") # Se eliminan espacios en blanco
     
-    if len(name) >= 2 and len(name) <= 15 and name.isalpha():
-        key = True
-        if len(drink) > 1 and len(drink) < 7:
-            sizes = []
-            for s in range(1, len(drink)):
-                size = drink[s]
-                size = size.replace(" ","")
-                if float(size) >= 1 and float(size) <= 48:
-                    sizes.append(math.floor(float(size)))
+    if len(name) >= 2 and len(name) <= 15 and name.isalpha(): # Se comprueba que el primer elemento sea un nombre alfabetico entre 2 y 15 caracteres
+        key = True # Llave de paso para la condicion de que todos los tamanios sean validos
+        if len(drink) > 1 and len(drink) < 7: # Condicion que define si hay al menos un tamanio, y menos de cinco
+            sizes = [] # Lista de tamanios
+            for s in range(1, len(drink)): # Recorre la lista para obtener todos los tamanios
+                size = drink[s] # Se define una variable como el tamanio actual
+                size = size.replace(" ","") # Se eliminan los espacios del tamanio
+                if float(size) >= 1 and float(size) <= 48: # Condicion que revisa que el tamanio este en un rango de entre 1 y 48
+                    sizes.append(math.floor(float(size))) # Se convierte de string a numero, se redondea y se agrega a la lista de tamanios
                 else:
-                    key = False
-                    return "Tamanio INVALIDO"
+                    key = False # Si la condicion anterior no se cumple, la llave de paso se cierra
+                    return "Tamanio INVALIDO" #Se regresa el texto que le hace saber al usuario que su entrada fue invalida
         
             if key == True:    
-                if lista_es_ordenada(sizes):
-                    registro = "Nombre de la bebida: " + name + " | Tamanios para la bebida: " + "".join(str(sizes))
-                    write_in_file("RegistroBebidas.txt",registro)
-                    return registro
+                if lista_es_ordenada(sizes): # Se comprueba que la lista de tamanios este ordenada de manera ascendente
+                    registro = "Nombre de la bebida: " + name + " | Tamanios para la bebida: " + "".join(str(sizes)) # Una vez se revisa que todo se cumpla, se escribe el registro
+                    write_in_file("RegistroBebidas.txt",registro) # Se sube el registro de la bebida a un archivo
+                    return registro # Y se le muestra al usuario su registro
                 else:
-                    return "Los tamanios no estan ordenados de forma ascendente"
+                    return "Los tamanios no estan ordenados de forma ascendente" # Invalido
             
         else:
-            return "Cantidad de tamanios INVALIDO"
+            return "Cantidad de tamanios INVALIDO" # Invalido
             
     else:
-        return "Nombre de la bebida INVALIDO"
+        return "Nombre de la bebida INVALIDO" # Invalido
 
-def lista_es_ordenada(lista):
-    ordenada = True
-    for i in range(1, len(lista)):
-        if lista[i] < lista[i - 1]:
-            ordenada = False
+def lista_es_ordenada(lista): # Funcion que comprueba que una lista esta ordenada de manera ascendente
+    ordenada = True # Define si esta ordenada
+    for i in range(1, len(lista)): # Se recorre la lista
+        if lista[i] < lista[i - 1]: # Se compara con su anterior
+            ordenada = False # Si este es menor entonces la condicion no se cumples
             break
-    return ordenada
+    return ordenada # Regresa si la lista esta ordenada o no
 
-def stringtolist(str):
-    delim = ","
-    arrange = str.split(delim)
-    return arrange
+def stringtolist(str): # Funcion que transforma un string a una lista
+    delim = "," # Indicador para separar el string por las comas
+    arrange = str.split(delim) # Funcion que separa el string conforme al indicador
+    return arrange # Regresa el texto dividido
     
-def write_in_file(fileName,text): 
-    with open(fileName,"a", encoding="utf8") as file: 
-        newline = "\n" + text
-        file.write(newline) 
+def write_in_file(fileName,text): # Funcion para sobreescribir un archivo existente, recibe nombre del archivo y texto a escribir
+    with open(fileName,"a", encoding="utf8") as file: # Abre o crea un archivo con el metodo de sobreescribir sobre la ultima linea
+        newline = "\n" + text # Se crea una nueva linea con el texto especificado
+        file.write(newline) # Se escribe la linea
     
-    file.close()
+    file.close() # Es importante cerar el Archivo
     
 if __name__ == '__main__':
     print("-------------------- Bienvenido al sistema para registrar bebidas a la Cafeteria --------------------")
@@ -65,13 +65,13 @@ if __name__ == '__main__':
     print("Se deben ingresar de forma ascendente")
     print("RECUERDA: Separar el nombre y cada tamanio con una coma")
     
-    print("Ingresa la bebida: ")
-    entrada = input()
+    print("Ingresa la bebida: ") 
+    entrada = input() # Input del usuario
     
-    bebida = stringtolist(entrada)
+    bebida = stringtolist(entrada) # De string a lista
     
-    respuesta = cafe(bebida)
-    print(respuesta)
+    respuesta = cafe(bebida) # Registro de Bebida
+    print(respuesta) # Respuesta al usuario
     
     
     
