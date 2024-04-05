@@ -1,3 +1,4 @@
+import pytest
 import numpy as np # Importar numpy para operaciones
 import math # Importar math para redondeo
 
@@ -15,22 +16,22 @@ def cafe(drink):
                 if float(size) >= 1 and float(size) <= 48:
                     sizes.append(math.floor(float(size)))
                 else:
-                    print("Un tamanio es INVALIDO")
                     key = False
+                    return "Tamanio INVALIDO"
         
             if key == True:    
                 if lista_es_ordenada(sizes):
                     registro = "Nombre de la bebida: " + name + " | Tamanios para la bebida: " + "".join(str(sizes))
-                    print(registro)
                     write_in_file("RegistroBebidas.txt",registro)
+                    return registro
                 else:
-                    print("Los tamanios no estan ordenados de forma ascendente")
+                    return "Los tamanios no estan ordenados de forma ascendente"
             
         else:
-            print("Cantidad de tamanios INVALIDO")
+            return "Cantidad de tamanios INVALIDO"
             
     else:
-        print("Nombre de la bebida INVALIDO")
+        return "Nombre de la bebida INVALIDO"
 
 def lista_es_ordenada(lista):
     ordenada = True
@@ -69,7 +70,8 @@ if __name__ == '__main__':
     
     bebida = stringtolist(entrada)
     
-    cafe(bebida)
+    respuesta = cafe(bebida)
+    print(respuesta)
     
     
     
